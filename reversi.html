@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Reversi AI - Ing. Robert Polák</title>
+    <style>
+        body {
+            background-color: #2C3E50;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ECF0F1;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1ABC9C;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 48px;
+            color: #2C3E50;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #gameCanvas {
+            background-color: #27AE60;
+            border: 4px solid #ECF0F1;
+            margin-top: 20px;
+        }
+        #info, #controls, #openingName {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #stoneCount, #status {
+            font-size: 18px;
+            margin: 0 10px;
+        }
+        #newGameButton {
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #1ABC9C;
+            border: none;
+            color: #2C3E50;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #newGameButton:hover {
+            background-color: #16A085;
+        }
+        #depthInput {
+            width: 50px;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #BDC3C7;
+            padding: 5px;
+        }
+        label {
+            font-size: 16px;
+            margin-right: 5px;
+        }
+        #openingName {
+            font-weight: bold;
+            font-size: 20px;
+        }
+        footer {
+            background-color: #1ABC9C;
+            padding: 10px;
+            text-align: center;
+            color: #2C3E50;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Additional styling for the description */
+        .description {
+            background-color: #34495E;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        .description h2 {
+            margin-top: 0;
+            color: #1ABC9C;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Reversi AI</h1>
+    </header>
+    <main>
+        <canvas id="gameCanvas"></canvas>
+        <div id="info">
+            <span id="stoneCount">Black: 2    White: 2</span>
+            <span id="status">Your turn</span>
+        </div>
+        <div id="openingName">Opening: None</div>
+
+        <div id="controls">
+            <label for="depthInput">Hĺbka vyhľadávania:</label>
+            <input type="number" id="depthInput" min="1" max="10" value="4">
+            <button id="newGameButton">Nová hra</button>
+        </div>
+
+        <div class="description">
+            <h2>O hre Reversi</h2>
+            <p>
+                Reversi je strategická stolová hra pre dvoch hráčov hraná na doske 8x8. Hráči striedavo umiestňujú kamene svojej farby na dosku tak, aby obkľúčili kamene súpera a otočili ich na svoju farbu. Cieľom hry je mať na konci hry viac kameňov svojej farby než súper.
+            </p>
+            <h2>Použitá heuristika</h2>
+            <p>
+                V tejto implementácii bola použitá heuristika založená na váhovaní pozícií na doske. Každé pole na doske má pridelenú váhu podľa toho, aký má strategický význam (napríklad rohy majú najvyššiu hodnotu). AI využíva algoritmus Minimax s orezávaním alfa-beta na predikciu najlepšieho možného ťahu až do určitej hĺbky vyhľadávania.
+            </p>
+            
+        </div>
+    </main>
+    <footer>
+        <p>Autor kódu: Ing. Robert Polák</p>
+    </footer>
+
+    <!-- Umiestnite script tag tesne pred uzatváracím tagom body -->
+    <script src="reversi.js"></script>
+</body>
+</html>
