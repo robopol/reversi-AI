@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reversi AI - Ing. Robert Polák</title>
+    <title>Reversi - Othello AI</title>
+    <!-- Author: Ing. Robert Polák -->
     <style>
         body {
             background-color: #2C3E50;
@@ -29,7 +30,8 @@
         #gameCanvas {
             background-color: #27AE60;
             border: 4px solid #ECF0F1;
-            margin-top: 20px;
+            margin: 20px auto; /* Adds top and bottom margins and centers horizontally */
+            display: block;    /* Makes the canvas a block-level element to enable centering */
         }
         #info, #controls, #openingName {
             margin-top: 20px;
@@ -47,6 +49,7 @@
             color: #2C3E50;
             cursor: pointer;
             border-radius: 5px;
+            margin-left: 10px; /* Adding space between buttons */
         }
         #newGameButton:hover {
             background-color: #16A085;
@@ -58,14 +61,14 @@
             border-radius: 5px;
             border: 1px solid #BDC3C7;
             padding: 5px;
+            margin-left: 10px; /* Adding space between inputs */
         }
         label {
             font-size: 16px;
             margin-right: 5px;
         }
-        #openingName {
-            font-weight: bold;
-            font-size: 20px;
+        #openingName {            
+            font-size: 14px;
         }
         footer {
             background-color: #1ABC9C;
@@ -88,11 +91,42 @@
             margin-top: 0;
             color: #1ABC9C;
         }
+        /* Styling for radio buttons */
+        #startingPlayerSelection {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #startingPlayerSelection label {
+            margin-right: 15px;
+            font-size: 16px;
+        }
+        /* Responsive adjustments for mobile devices */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 32px;
+            }
+            #newGameButton, #depthInput {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            #stoneCount, #status {
+                font-size: 16px;
+            }
+            #openingName {
+                font-size: 18px;
+            }
+            .description h2 {
+                font-size: 18px;
+            }
+            .description p {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Reversi AI</h1>
+        <h1>Reversi - Othello AI</h1>
     </header>
     <main>
         <canvas id="gameCanvas"></canvas>
@@ -102,29 +136,122 @@
         </div>
         <div id="openingName">Opening: None</div>
 
+        <!-- Added block for selecting who starts the game -->
+        <div id="startingPlayerSelection">
+            <label>
+                <input type="radio" name="startingPlayer" value="player" checked>
+                Player Starts
+            </label>
+            <label>
+                <input type="radio" name="startingPlayer" value="ai">
+                AI Starts
+            </label>
+        </div>
+
         <div id="controls">
-            <label for="depthInput">Hĺbka vyhľadávania:</label>
+            <label for="depthInput">Search Depth:</label>
             <input type="number" id="depthInput" min="1" max="10" value="4">
-            <button id="newGameButton">Nová hra</button>
+            <button id="newGameButton">New Game</button>
         </div>
 
         <div class="description">
-            <h2>O hre Reversi</h2>
+            <h2>About Reversi</h2>
             <p>
-                Reversi je strategická stolová hra pre dvoch hráčov hraná na doske 8x8. Hráči striedavo umiestňujú kamene svojej farby na dosku tak, aby obkľúčili kamene súpera a otočili ich na svoju farbu. Cieľom hry je mať na konci hry viac kameňov svojej farby než súper.
+                Reversi is a strategic board game for two players played on an 8x8 board. Players take turns placing stones of their color on the board to surround the opponent's stones and flip them to their own color. The goal of the game is to have more stones of your color than your opponent at the end of the game.
             </p>
-            <h2>Použitá heuristika</h2>
+            <h2>Heuristic Used</h2>
             <p>
-                V tejto implementácii bola použitá heuristika založená na váhovaní pozícií na doske. Každé pole na doske má pridelenú váhu podľa toho, aký má strategický význam (napríklad rohy majú najvyššiu hodnotu). AI využíva algoritmus Minimax s orezávaním alfa-beta na predikciu najlepšieho možného ťahu až do určitej hĺbky vyhľadávania.
+                This implementation uses a heuristic based on positional weighting on the board. Each cell on the board is assigned a weight according to its strategic importance (for example, corners have the highest value). The AI utilizes the Minimax algorithm with alpha-beta pruning to predict the best possible move up to a certain search depth.
             </p>
-            
+        </div>
+
+        <!-- New Research Section Without Image Links -->
+        <div class="research">
+            <h2>Research on the Game Othello - Reversi</h2>
+
+            <h3>Introduction</h3>
+            <p>
+                Chess, Go, and Reversi are among the most popular strategic and combinatorial games. These games have existed for a considerable time and truly deserve the title of "royal games." In this article, I will discuss one of the lesser-known games from this trio: Reversi. In terms of complexity, it is simpler than both Chess and Go, featuring more straightforward rules. This simplicity is its charm—it has the easiest rules, and games are relatively quick to play.
+            </p>
+            <p>
+                I have been playing this game for 17 years. Gradually, as a beginner, I discovered the simplest strategies and noticed that certain positions are more critical than others. The most important are the corners, followed by the edges, and finally the interior. The first player to occupy the corners gains an advantage, often leading to victory. This was my beginner's perspective. Most beginners in this game tend to develop a greedy technique during play, aiming to have the most stones of their color flipped. However, this approach reduces their mobility, giving the opponent greater flexibility and, consequently, a significant advantage towards the end of the game.
+            </p>
+
+            <h3>Artificial Intelligence</h3>
+            <p>
+                It’s no coincidence that programs and artificial intelligence, with their algorithms, today leave no chance for humans to overcome them. Interestingly, it was Reversi that machines mastered faster than Chess or Go. In the game, they use the most effective algorithms, continuously improving their strategies, and primarily in Reversi, they plan up to 30 moves ahead, utilizing extensive libraries of verified openings. By the mid to late game, they can foresee all possible outcomes, which is nearly impossible for humans, even with the best strategies. For more details, refer to articles on artificial intelligence (AlphaGo, AlphaZero) available on this website.
+            </p>
+
+            <h3>WOC Players</h3>
+            <p>
+                Upon analyzing games of top players, known as WOC (World Championship) players, I concluded that even the best players cannot overcome a loss of -20 stones by the end of the game (depending on the game’s opening). This means they lose by at least 20 stones (with their best performance using more complex openings). This is quite substantial. If a human cannot find the perfect move, even a good move may not be sufficient, as making just one imperfect move can lead to defeat by the program.
+            </p>
+
+            <h4>Championship in Prague 2018:</h4>
+            <p>
+                <a href="https://youtu.be/HLW5Ms-gZAw" target="_blank">Watch the Match</a>
+            </p>
+            <p>
+                After watching several matches of top players, I must say that WOC players do not manage to play perfect moves even remotely. Matches are often decided by chance in the game's final stages. Even the best players make numerous poor moves that flip positional advantages multiple times, from player X to player Y and vice versa. If you were to play against any player in this championship using the best Reversi program, the results would likely show players not managing to secure more than 10 stones out of 64. The top players would finish around 44:20 in favor of the program. The program decisively defeats them with a significant lead. This championship in Prague was ultimately won by a young Japanese player.
+            </p>
+
+            <h3>Why Did This Young Japanese Player Win?</h3>
+            <p>
+                Besides recent improvements, his gameplay reflects better current raw strength (combinatorial abilities) slightly superior to his opponents in the top three. However, the two older players have greater experience, and in the match against the older Japanese top player, luck played a significant role. In the final game, his gameplay demonstrates better current combinatorial vision, which likely decided the match.
+            </p>
+
+            <h4>Championship Tokyo 2019:</h4>
+            <p>
+                <a href="https://www.youtube.com/watch?v=wDgtvn80qBk" target="_blank">Watch the Match</a>
+            </p>
+
+            <h3>Game Analysis</h3>
+            <p>
+                <strong>Opening:</strong> Tiger, up to the 11th move.<br>
+                <strong>Mid-Game:</strong> The young Takahashi deviates to C4 instead of the ideal, perfect move to D7, resulting in a loss of 2 stones by the game's end.<br>
+                From this point, maintaining a perfect line of moves is impossible. The young Japanese player makes errors at F8 and G5, leading to a loss of 4 stones by the end.<br>
+                After two more moves, this escalates to a loss of 8 stones. The older player messes up but maintains a 4-stone advantage.<br>
+                The younger player attempts to complicate the game around the 20th move, but the older player fails to capitalize on the young player's suboptimal move at B4, reducing the advantage.<br>
+                Overall, the game remains balanced in the mid-game. By the 31st move, the older player makes a poor move, losing the advantage.<br>
+                At the 41st move, the younger player makes another mistake, losing a small advantage.<br>
+                The older player then gains a 6-stone lead by the end of the game. The older player does not make any gross errors and maintains a 4-stone advantage until the end.<br>
+                The younger player ultimately loses by only 4 stones in favor of the older player.
+            </p>
+
+            <h3>Strategy for Perfect Play</h3>
+            <p>
+                It consists of three parts:
+            </p>
+            <ol>
+                <li><strong>Knowledge, Strategies, and Techniques:</strong>  
+                    These contribute to victory, including a library of verified openings and in-game techniques.
+                </li>
+                <li><strong>Experience and Memory:</strong>  
+                    Derived from numerous played matches, recognizing similar patterns and positions, requiring years of practice. This is akin to training neural networks.
+                </li>
+                <li><strong>Raw Combinatorial Strength:</strong>  
+                    The ability to envision as many moves as possible and predict the game's layout by exploring numerous combinations. This requires innate talent and years of training to enhance these abilities, as discussed in articles on artificial intelligence.
+                </li>
+            </ol>
+            <p>
+                These are the fundamental points a grandmaster must master. Even against the best opponents, achieving a perfect game is impossible, resulting only in a draw. AI has reached such a level that only exceptionally rare instances might result in a narrow victory otherwise. Theoretically, it's possible because no program can see the entire game from start to finish, encompassing all variations.
+            </p>
+            <p>
+                However, a human grandmaster can achieve a draw, but it requires perfect concentration, time, and mastery of the three components mentioned. Humans are fallible and often err in the third aspect. Additionally, humans must possess such advanced abilities that they can foresee the game's outcome at any given moment without necessarily visualizing exact layouts, but recognizing patterns that lead to their advantage.
+            </p>
+            <p>
+                AI, on the other hand, is incredibly creative, finding combinations humans might never see, often uncovering exceptions in Reversi strategies by exploring all possible game combinations.
+            </p>
+            <p>
+                In any case, if you know a sequence of perfect games and have honed your combinatorial skills, you can achieve numerous draws even against the most perfect programs. From my own experience, it's possible. Similarly, in Chess, it’s more challenging due to a larger state space, and in Go, a master might need to train, perhaps 70-100 years, to train their neural networks.
+            </p>            
         </div>
     </main>
     <footer>
-        <p>Autor kódu: Ing. Robert Polák</p>
+        <p>Code Author: Ing. Robert Polák</p>
     </footer>
 
-    <!-- Umiestnite script tag tesne pred uzatváracím tagom body -->
+    <!-- Place the script tag just before the closing body tag -->
     <script src="reversi.js"></script>
 </body>
 </html>
