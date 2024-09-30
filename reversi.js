@@ -83,7 +83,7 @@ function rotateNotation(notation, angle) {
     return indicesToNotation(newRow, newCol);
 }
 
-// Rotate coordinates by angle (90, 180, 270 degrees)
+// Rotate coordinates by angle (0, 90, 180, 270 degrees)
 function rotateCoordinates(row, col, angle) {
     switch (angle) {
         case 90:
@@ -101,20 +101,137 @@ function rotateCoordinates(row, col, angle) {
 const openingBook = buildOpeningBook([
     // Each opening is an object with a name and moves
     {
-        name: 'Perpendicular',
+        name: 'Perpendicular Opening',
         moves: [
-            { player: 1, notation: 'F5' },
-            { player: -1, notation: 'D6' }
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' }
         ]
     },
     {
         name: 'Tiger',
         moves: [
-            { player: 1, notation: 'F5' },
-            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
             { player: 1, notation: 'C3' },
-            { player: -1, notation: 'D3' },
-            { player: 1, notation: 'C4' }
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' }
+        ]
+    },
+    {
+        name: 'Aubrey, Tanaka',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'C2' }
+        ]
+    },
+    {
+        name: 'Brightwell',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'C5' }
+        ]
+    },
+    {
+        name: 'Rose-BILL',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'E3' },
+            { player: -1, notation: 'C2' },
+            { player: 1, notation: 'B3' }
+        ]
+    },
+    {
+        name: 'Tamenori**',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'E3' },
+            { player: -1, notation: 'C2' },
+            { player: 1, notation: 'B3' },
+            { player: -1, notation: 'F5' }
+        ]
+    },
+    {
+        name: 'Ishii**',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'E3' },
+            { player: -1, notation: 'D2' },
+            { player: 1, notation: 'E2' },
+            { player: -1, notation: 'F3' },
+            { player: 1, notation: 'C6' },
+            { player: -1, notation: 'F5' },
+            { player: 1, notation: 'C5' }
+        ]
+    },
+    {
+        name: 'Mainline Tiger**',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'E3' },
+            { player: -1, notation: 'D2' },
+            { player: 1, notation: 'E2' },
+            { player: -1, notation: 'F3' },
+            { player: 1, notation: 'C6' },
+            { player: -1, notation: 'F5' },
+            { player: 1, notation: 'C5' },
+            { player: -1, notation: 'F7' },
+            { player: 1, notation: 'F6' },
+            { player: -1, notation: 'E7' },
+            { player: 1, notation: 'G4' },
+            { player: -1, notation: 'C7' }
+        ]
+    },
+    {
+        name: 'Leader\'s Tiger',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'F5' }
+        ]
+    },
+    {
+        name: 'Stephenson',
+        moves: [
+            { player: 1, notation: 'E6' },
+            { player: -1, notation: 'F4' },
+            { player: 1, notation: 'C3' },
+            { player: -1, notation: 'C4' },
+            { player: 1, notation: 'D3' },
+            { player: -1, notation: 'D6' },
+            { player: 1, notation: 'F6' }
         ]
     },
     // Continue adding the rest of the openings in the same format...
@@ -123,20 +240,60 @@ const openingBook = buildOpeningBook([
 function buildOpeningBook(openingsList) {
     let book = [];
     for (let opening of openingsList) {
-        // Generate all rotations of the opening moves
         let rotations = [0, 90, 180, 270];
         for (let angle of rotations) {
             let rotatedOpening = {
                 name: opening.name,
+                angle: angle,
                 moves: opening.moves.map(move => {
                     let rotatedNotation = rotateNotation(move.notation, angle);
                     return { player: move.player, notation: rotatedNotation };
-                })
+                }),
+                boards: [] // To store the board states after each move
             };
+
+            // Generate board states for this rotated opening
+            let tempBoard = generateInitialBoard();
+            for (let move of rotatedOpening.moves) {
+                let [row, col] = notationToIndices(move.notation);
+                tempBoard = makeMove(tempBoard, move.player, [row, col]);
+                // Deep copy the board and store it
+                rotatedOpening.boards.push(JSON.parse(JSON.stringify(tempBoard)));
+            }
+
             book.push(rotatedOpening);
         }
     }
     return book;
+}
+
+// Helper function to rotate the entire board
+function rotateBoard(board, angle) {
+    let newBoard = [];
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        newBoard.push(new Array(BOARD_SIZE).fill(0));
+    }
+
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            let [newRow, newCol] = rotateCoordinates(row, col, angle);
+            newBoard[newRow][newCol] = board[row][col];
+        }
+    }
+
+    return newBoard;
+}
+
+// Helper function to compare two boards
+function boardsAreEqual(board1, board2) {
+    for (let row = 0; row < BOARD_SIZE; row++) {
+        for (let col = 0; col < BOARD_SIZE; col++) {
+            if (board1[row][col] !== board2[row][col]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 function generateInitialBoard() {
@@ -243,12 +400,9 @@ function drawBoard(board) {
     // Draw board background
     ctx.fillStyle = BOARD_COLOR;
     ctx.fillRect(margin, margin, BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
-    ctx.strokeStyle = BORDER_COLOR;
-    ctx.lineWidth = BORDER_WIDTH;
-    ctx.strokeRect(margin, margin, BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
-
+    
     // Draw internal grid lines
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "darkgreen";
     ctx.lineWidth = LINE_WIDTH;
 
     // Vertical lines
@@ -269,6 +423,14 @@ function drawBoard(board) {
         ctx.stroke();
     }
 
+    // Determine the last move
+    let lastRow = -1;
+    let lastCol = -1;
+    if (moveHistory.length > 0) {
+        let lastMove = moveHistory[moveHistory.length - 1];
+        [lastRow, lastCol] = notationToIndices(lastMove.notation);
+    }
+
     // Draw stones
     for (let row = 0; row < BOARD_SIZE; row++) {
         for (let col = 0; col < BOARD_SIZE; col++) {
@@ -281,6 +443,15 @@ function drawBoard(board) {
                 ctx.arc(x + CELL_SIZE / 2, y + CELL_SIZE / 2, CELL_SIZE / 2 - 5, 0, 2 * Math.PI);
                 ctx.fillStyle = board[row][col] === 1 ? BLACK_COLOR : WHITE_COLOR;
                 ctx.fill();
+
+                // Highlight the last move with an orange border
+                if (row === lastRow && col === lastCol) {
+                    ctx.beginPath();
+                    ctx.arc(x + CELL_SIZE / 2, y + CELL_SIZE / 2, CELL_SIZE / 2 - 5, 0, 2 * Math.PI);
+                    ctx.strokeStyle = "orange";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
             }
         }
     }
@@ -307,6 +478,11 @@ function drawBoard(board) {
         // Column letters
         ctx.fillText(String.fromCharCode(65 + i), margin + i * CELL_SIZE + CELL_SIZE / 2 - 5, margin - 20);
     }
+
+    // Draw the white border last to ensure it appears on top
+    ctx.strokeStyle = BORDER_COLOR;
+    ctx.lineWidth = BORDER_WIDTH;
+    ctx.strokeRect(margin, margin, BOARD_SIZE * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
 }
 
 // Keep track of move history
@@ -375,18 +551,24 @@ function aiMove() {
 
 function getOpeningMove() {
     for (let opening of openingBook) {
-        let match = true;
-        for (let i = 0; i < moveHistory.length; i++) {
-            if (!opening.moves[i] || opening.moves[i].player !== moveHistory[i].player || opening.moves[i].notation !== moveHistory[i].notation) {
-                match = false;
-                break;
+        // Rotate the current board to match the rotation of the opening
+        let rotatedCurrentBoard = rotateBoard(board, opening.angle);
+
+        // Compare the rotated current board with the opening's boards
+        for (let i = 0; i < opening.boards.length; i++) {
+            if (boardsAreEqual(rotatedCurrentBoard, opening.boards[i])) {
+                // If there is a next move in the opening
+                if (i + 1 < opening.moves.length && opening.moves[i + 1].player === currentPlayer) {
+                    let nextMoveNotation = opening.moves[i + 1].notation;
+                    let [row, col] = notationToIndices(nextMoveNotation);
+
+                    // Rotate the move back to match the original board orientation
+                    let [originalRow, originalCol] = rotateCoordinates(row, col, (360 - opening.angle) % 360);
+
+                    let openingName = opening.name;
+                    return { move: [originalRow, originalCol], openingName };
+                }
             }
-        }
-        if (match && opening.moves[moveHistory.length] && opening.moves[moveHistory.length].player === currentPlayer) {
-            let nextMoveNotation = opening.moves[moveHistory.length].notation;
-            let [row, col] = notationToIndices(nextMoveNotation);
-            let openingName = opening.name;
-            return { move: [row, col], openingName };
         }
     }
     return null;
@@ -394,15 +576,14 @@ function getOpeningMove() {
 
 function getCurrentOpeningName() {
     for (let opening of openingBook) {
-        let match = true;
-        for (let i = 0; i < moveHistory.length; i++) {
-            if (!opening.moves[i] || opening.moves[i].player !== moveHistory[i].player || opening.moves[i].notation !== moveHistory[i].notation) {
-                match = false;
-                break;
+        // Rotate the current board to match the rotation of the opening
+        let rotatedCurrentBoard = rotateBoard(board, opening.angle);
+
+        // Compare the rotated current board with the opening's boards
+        for (let i = 0; i < opening.boards.length; i++) {
+            if (boardsAreEqual(rotatedCurrentBoard, opening.boards[i])) {
+                return opening.name;
             }
-        }
-        if (match) {
-            return opening.name;
         }
     }
     return null;
@@ -446,15 +627,40 @@ function updateStoneCount() {
     stoneCountLabel.textContent = `Black: ${blackCount}    White: ${whiteCount}`;
 }
 
+// Get reference to the new radio buttons
+let startingPlayerSelection = document.getElementsByName('startingPlayer');
+
+// Updated newGame function
 function newGame() {
     board = generateInitialBoard();
-    currentPlayer = 1; // Start with Black (human)
     moveHistory = []; // Reset move history
     currentOpeningName = ""; // Reset opening name
-    drawBoard(board);
-    statusLabel.textContent = "Your turn";
-    openingNameLabel.textContent = 'Opening: None';
     updateStoneCount();
+    updateOpeningName();
+    drawBoard(board);
+    
+    // Determine who starts
+    let startingPlayer = 'player'; // Default value
+    for (let option of startingPlayerSelection) {
+        if (option.checked) {
+            startingPlayer = option.value;
+            break;
+        }
+    }
+
+    if (startingPlayer === 'player') {
+        currentPlayer = 1; // Player starts
+        statusLabel.textContent = "Your turn";
+    } else {
+        currentPlayer = -1; // AI starts
+        statusLabel.textContent = "AI's turn";
+        setTimeout(aiMove, 500); // Trigger AI move with a slight delay
+    }
+
+    // Update opening name if AI makes the first move
+    if (currentPlayer === -1) {
+        updateOpeningName();
+    }
 }
 
 function gameOver() {
