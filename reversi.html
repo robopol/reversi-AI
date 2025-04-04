@@ -2,124 +2,383 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reversi - Othello AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reversi - Othello AI | Advanced Strategy Game</title>
     <!-- Author: Ing. Robert Polák -->
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiMyN0FFNjAiLz4KICAgIDxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjE2IiBmaWxsPSIjMDAwMDAwIi8+CiAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSIxNiIgZmlsbD0iI0ZGRkZGRiIvPgo8L3N2Zz4=">
+    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiMyN0FFNjAiLz4KICAgIDxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjE2IiBmaWxsPSIjMDAwMDAwIi8+CiAgICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSIxNiIgZmlsbD0iI0ZGRkZGRiIvPgo8L3N2Zz4=" sizes="32x32">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Play Reversi (Othello) with an advanced AI opponent. Learn strategies, techniques and perfect your gameplay with this interactive implementation by Ing. Robert Polák.">
+    <meta name="keywords" content="reversi, othello, board game, strategy game, AI game, minimax algorithm, alpha-beta pruning">
+    <meta name="author" content="Ing. Robert Polák">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://robopol.sk/reversi/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robopol.sk/reversi/">
+    <meta property="og:title" content="Reversi - Othello AI | Strategic Board Game">
+    <meta property="og:description" content="Play the classic strategy game Reversi against an advanced AI. Learn strategic techniques and improve your gameplay.">
+    <meta property="og:site_name" content="RoboPol.sk">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://robopol.sk/reversi/">
+    <meta property="twitter:title" content="Reversi - Othello AI | Strategic Board Game">
+    <meta property="twitter:description" content="Play the classic strategy game Reversi against an advanced AI. Learn strategic techniques and improve your gameplay.">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Reversi - Othello AI",
+      "description": "An interactive Reversi (Othello) game with AI opponent using minimax algorithm with alpha-beta pruning",
+      "author": {
+        "@type": "Person",
+        "name": "Ing. Robert Polák",
+        "url": "https://robopol.sk"
+      },
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "url": "https://robopol.sk/reversi/",
+      "genre": "Strategy Game",
+      "inLanguage": "en",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
     <style>
         body {
-            background-color: #2C3E50;
+            background-color: #121212;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ECF0F1;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #1ABC9C;
-            padding: 20px;
+            background: linear-gradient(135deg, #1ABC9C, #16A085);
+            padding: 25px;
             text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         header h1 {
             margin: 0;
             font-size: 48px;
-            color: #2C3E50;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         main {
-            padding: 20px;
+            padding: 30px;
             max-width: 900px;
             margin: 0 auto;
+            padding-bottom: 80px; /* Priestor pre footer */
         }
         #gameCanvas {
             background-color: #27AE60;
-            border: 4px solid #ECF0F1;
-            margin: 20px auto; /* Adds top and bottom margins and centers horizontally */
-            display: block;    /* Makes the canvas a block-level element to enable centering */
+            border: 5px solid #ECF0F1;
+            margin: 20px auto; 
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
         #info, #controls, #openingName {
             margin-top: 20px;
             text-align: center;
         }
         #stoneCount, #status {
-            font-size: 18px;
-            margin: 0 10px;
+            font-size: 20px;
+            margin: 0 15px;
+            background-color: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 30px;
+            display: inline-block;
         }
-        #newGameButton {
+        .button {
             font-size: 16px;
-            padding: 10px 20px;
-            background-color: #1ABC9C;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #1ABC9C, #16A085);
             border: none;
-            color: #2C3E50;
+            color: white;
             cursor: pointer;
-            border-radius: 5px;
-            margin-left: 10px; /* Adding space between buttons */
+            border-radius: 30px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        #newGameButton:hover {
-            background-color: #16A085;
+        .button:hover {
+            background: linear-gradient(135deg, #16A085, #1ABC9C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
         }
         #depthInput {
-            width: 50px;
+            width: 60px;
             font-size: 16px;
             text-align: center;
             border-radius: 5px;
-            border: 1px solid #BDC3C7;
-            padding: 5px;
-            margin-left: 10px; /* Adding space between inputs */
+            border: 1px solid #2ecc71;
+            padding: 10px;
+            margin: 0 10px;
+            background-color: #2C3E50;
+            color: #ECF0F1;
         }
         label {
             font-size: 16px;
-            margin-right: 5px;
+            margin-right: 10px;
         }
         #openingName {            
-            font-size: 14px;
+            font-size: 16px;
+            margin-top: 15px;
+            padding: 5px 10px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            display: inline-block;
         }
         footer {
-            background-color: #1ABC9C;
-            padding: 10px;
+            background: linear-gradient(135deg, #1ABC9C, #16A085);
+            padding: 15px;
             text-align: center;
-            color: #2C3E50;
+            color: white;
             position: fixed;
             bottom: 0;
             width: 100%;
+            z-index: 100;  /* Zabezpečí, že footer bude nad ostatným obsahom */
         }
-        /* Additional styling for the description */
-        .description {
-            background-color: #34495E;
-            padding: 20px;
+        
+        /* Styling pre popis hry */
+        .content-section {
+            background-color: #1e272e;
+            padding: 25px;
             border-radius: 10px;
-            margin-top: 20px;
-            line-height: 1.6;
+            margin-top: 30px;
+            line-height: 1.7;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            display: none; /* Skryjeme sekcie s popisom */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            max-height: 0;
+            overflow: hidden;
+            position: relative; /* Pridané pre lepšiu kontrolu rozmerov */
         }
-        .description h2 {
-            margin-top: 0;
+        
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            max-height: none;
+            overflow: visible;
+            margin-bottom: 60px; /* Priestor pre footer */
+        }
+        
+        .content-section h2, .content-section h3, .content-section h4 {
             color: #1ABC9C;
+            margin-top: 20px;
         }
+        
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        
         /* Styling for radio buttons */
         #startingPlayerSelection {
-            margin-top: 20px;
+            margin: 25px 0;
             text-align: center;
+            background-color: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
         }
-        #startingPlayerSelection label {
-            margin-right: 15px;
+        
+        .radio-container {
+            display: inline-block;
+            position: relative;
+            padding-left: 35px;
+            margin-right: 25px;
+            cursor: pointer;
             font-size: 16px;
+            user-select: none;
         }
-        /* Responsive adjustments for mobile devices */
-        @media (max-width: 600px) {
+        
+        .radio-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #2C3E50;
+            border-radius: 50%;
+            border: 2px solid #1ABC9C;
+        }
+        
+        .radio-container:hover input ~ .checkmark {
+            background-color: #34495E;
+        }
+        
+        .radio-container input:checked ~ .checkmark {
+            background-color: #1ABC9C;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .radio-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .radio-container .checkmark:after {
+            top: 7px;
+            left: 7px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: white;
+        }
+        
+        /* List styling */
+        .content-section ol {
+            padding-left: 25px;
+        }
+        
+        .content-section li {
+            margin-bottom: 15px;
+        }
+        
+        /* Buttons container */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
             header h1 {
-                font-size: 32px;
+                font-size: 32px; /* Slightly smaller */
             }
-            #newGameButton, #depthInput {
-                font-size: 14px;
-                padding: 8px 16px;
+            main {
+                padding: 15px;
+                max-width: 100%; /* Ensure main content doesn't overflow */
+            }
+            #gameCanvas {
+                /* Make canvas responsive, respecting aspect ratio */
+                /* JS handles the actual pixel size, but CSS can help with layout */
+                max-width: 100%;
+                height: auto; /* Maintain aspect ratio if width changes */
+                border-width: 3px;
+            }
+            #info {
+                /* Elements are already stacked due to display: block on spans */
+                margin-top: 15px;
             }
             #stoneCount, #status {
                 font-size: 16px;
+                display: block;
+                margin: 8px auto; /* Smaller margin */
+                max-width: 250px; /* Slightly wider */
+                padding: 8px 12px;
             }
             #openingName {
-                font-size: 18px;
-            }
-            .description h2 {
-                font-size: 18px;
-            }
-            .description p {
                 font-size: 14px;
+                margin-top: 10px;
+            }
+            #startingPlayerSelection {
+                padding: 10px;
+                margin: 15px 0;
+                text-align: left; /* Align container content to left */
+            }
+            .radio-container {
+                display: inline-block; /* Display side-by-side */
+                margin: 10px 15px 10px 0; /* Adjust margins */
+                text-align: left; /* Align text to left */
+                padding-left: 35px; /* Restore padding for checkmark */
+                position: relative; /* Needed for absolute checkmark */
+                /* Remove max-width if it was causing centering */
+                max-width: none; 
+            }
+            .radio-container .checkmark {
+                 /* Restore original position */
+                 left: 0;
+                 top: 0; /* Adjust vertical alignment if needed */
+            }
+            #controls {
+                display: flex;
+                flex-direction: column; /* Stack controls vertically */
+                align-items: center; /* Center items */
+                gap: 10px; /* Add space between stacked items */
+                margin-top: 15px;
+            }
+            #controls label {
+                 margin-right: 0; /* Remove right margin */
+                 margin-bottom: 5px; /* Add bottom margin */
+            }
+            #depthInput {
+                width: 80px; /* Slightly wider */
+                padding: 8px;
+                margin: 0; /* Remove horizontal margins */
+            }
+            .button {
+                font-size: 14px;
+                padding: 10px 20px;
+                width: 80%; /* Make buttons wider */
+                max-width: 250px; /* Limit max width */
+                margin: 5px 0; /* Adjust margin for stacked layout */
+            }
+             .buttons-container { /* Ensure strategy button is centered */
+                 margin-top: 15px;
+             }
+            .content-section {
+                padding: 15px;
+            }
+            footer {
+                padding: 10px;
+                font-size: 12px;
+                /* position: relative; /* Uncomment if fixed footer causes overlap issues */
+            }
+            main {
+                padding-bottom: 70px; /* Adjust padding to account for footer height + some space */
+            }
+        }
+
+        /* Optional: Styles for very small screens */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 28px;
+            }
+            #stoneCount, #status {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            #depthInput {
+                width: 70px;
+            }
+            .button {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+            main {
+                padding-bottom: 60px; /* Adjust padding for smaller footer */
+            }
+            footer {
+                padding: 8px;
+                font-size: 11px;
             }
         }
     </style>
@@ -136,37 +395,31 @@
         </div>
         <div id="openingName">Opening: None</div>
 
-        <!-- Added block for selecting who starts the game -->
+        <!-- Block for selecting who starts the game -->
         <div id="startingPlayerSelection">
-            <label>
+            <label class="radio-container">Player Starts
                 <input type="radio" name="startingPlayer" value="player" checked>
-                Player Starts
+                <span class="checkmark"></span>
             </label>
-            <label>
+            <label class="radio-container">AI Starts
                 <input type="radio" name="startingPlayer" value="ai">
-                AI Starts
+                <span class="checkmark"></span>
             </label>
         </div>
 
         <div id="controls">
             <label for="depthInput">Search Depth:</label>
             <input type="number" id="depthInput" min="1" max="10" value="4">
-            <button id="newGameButton">New Game</button>
+            <button id="newGameButton" class="button">New Game</button>
         </div>
 
-        <div class="description">
-            <h2>About Reversi</h2>
-            <p>
-                Reversi is a strategic board game for two players played on an 8x8 board. Players take turns placing stones of their color on the board to surround the opponent's stones and flip them to their own color. The goal of the game is to have more stones of your color than your opponent at the end of the game.
-            </p>
-            <h2>Heuristic Used</h2>
-            <p>
-                This implementation uses a heuristic based on positional weighting on the board. Each cell on the board is assigned a weight according to its strategic importance (for example, corners have the highest value). The AI utilizes the Minimax algorithm with alpha-beta pruning to predict the best possible move up to a certain search depth.
-            </p>
+        <!-- Tlačidlá pre zobrazenie popisu -->
+        <div class="buttons-container">
+            <button id="showResearchButton" class="button">Research & Strategies</button>
         </div>
 
-        <!-- New Research Section Without Image Links -->
-        <div class="research">
+        <!-- Výskum - skrytý obsah -->
+        <div id="researchSection" class="content-section">
             <h2>Research on the Game Othello - Reversi</h2>
 
             <h3>Introduction</h3>
@@ -179,44 +432,13 @@
 
             <h3>Artificial Intelligence</h3>
             <p>
-                It’s no coincidence that programs and artificial intelligence, with their algorithms, today leave no chance for humans to overcome them. Interestingly, it was Reversi that machines mastered faster than Chess or Go. In the game, they use the most effective algorithms, continuously improving their strategies, and primarily in Reversi, they plan up to 30 moves ahead, utilizing extensive libraries of verified openings. By the mid to late game, they can foresee all possible outcomes, which is nearly impossible for humans, even with the best strategies. For more details, refer to articles on artificial intelligence (AlphaGo, AlphaZero) available on this website.
+                It's no coincidence that programs and artificial intelligence, with their algorithms, today leave no chance for humans to overcome them. Interestingly, it was Reversi that machines mastered faster than Chess or Go. In the game, they use the most effective algorithms, continuously improving their strategies, and primarily in Reversi, they plan up to 30 moves ahead, utilizing extensive libraries of verified openings. By the mid to late game, they can foresee all possible outcomes, which is nearly impossible for humans, even with the best strategies. For more details, refer to articles on artificial intelligence (AlphaGo, AlphaZero) available on this website.
             </p>
 
             <h3>WOC Players</h3>
             <p>
-                Upon analyzing games of top players, known as WOC (World Championship) players, I concluded that even the best players cannot overcome a loss of -20 stones by the end of the game (depending on the game’s opening). This means they lose by at least 20 stones (with their best performance using more complex openings). This is quite substantial. If a human cannot find the perfect move, even a good move may not be sufficient, as making just one imperfect move can lead to defeat by the program.
-            </p>
-
-            <h4>Championship in Prague 2018:</h4>
-            <p>
-                <a href="https://youtu.be/HLW5Ms-gZAw" target="_blank">Watch the Match</a>
-            </p>
-            <p>
-                After watching several matches of top players, I must say that WOC players do not manage to play perfect moves even remotely. Matches are often decided by chance in the game's final stages. Even the best players make numerous poor moves that flip positional advantages multiple times, from player X to player Y and vice versa. If you were to play against any player in this championship using the best Reversi program, the results would likely show players not managing to secure more than 10 stones out of 64. The top players would finish around 44:20 in favor of the program. The program decisively defeats them with a significant lead. This championship in Prague was ultimately won by a young Japanese player.
-            </p>
-
-            <h3>Why Did This Young Japanese Player Win?</h3>
-            <p>
-                Besides recent improvements, his gameplay reflects better current raw strength (combinatorial abilities) slightly superior to his opponents in the top three. However, the two older players have greater experience, and in the match against the older Japanese top player, luck played a significant role. In the final game, his gameplay demonstrates better current combinatorial vision, which likely decided the match.
-            </p>
-
-            <h4>Championship Tokyo 2019:</h4>
-            <p>
-                <a href="https://www.youtube.com/watch?v=wDgtvn80qBk" target="_blank">Watch the Match</a>
-            </p>
-
-            <h3>Game Analysis</h3>
-            <p>
-                <strong>Opening:</strong> Tiger, up to the 11th move.<br>
-                <strong>Mid-Game:</strong> The young Takahashi deviates to C4 instead of the ideal, perfect move to D7, resulting in a loss of 2 stones by the game's end.<br>
-                From this point, maintaining a perfect line of moves is impossible. The young Japanese player makes errors at F8 and G5, leading to a loss of 4 stones by the end.<br>
-                After two more moves, this escalates to a loss of 8 stones. The older player messes up but maintains a 4-stone advantage.<br>
-                The younger player attempts to complicate the game around the 20th move, but the older player fails to capitalize on the young player's suboptimal move at B4, reducing the advantage.<br>
-                Overall, the game remains balanced in the mid-game. By the 31st move, the older player makes a poor move, losing the advantage.<br>
-                At the 41st move, the younger player makes another mistake, losing a small advantage.<br>
-                The older player then gains a 6-stone lead by the end of the game. The older player does not make any gross errors and maintains a 4-stone advantage until the end.<br>
-                The younger player ultimately loses by only 4 stones in favor of the older player.
-            </p>
+                Upon analyzing games of top players, known as WOC (World Championship) players, I concluded that even the best players cannot overcome a loss of -20 stones by the end of the game (depending on the game's opening). This means they lose by at least 20 stones (with their best performance using more complex openings). This is quite substantial. If a human cannot find the perfect move, even a good move may not be sufficient, as making just one imperfect move can lead to defeat by the program.
+            </p>            
 
             <h3>Strategy for Perfect Play</h3>
             <p>
@@ -243,15 +465,62 @@
                 AI, on the other hand, is incredibly creative, finding combinations humans might never see, often uncovering exceptions in Reversi strategies by exploring all possible game combinations.
             </p>
             <p>
-                In any case, if you know a sequence of perfect games and have honed your combinatorial skills, you can achieve numerous draws even against the most perfect programs. From my own experience, it's possible. Similarly, in Chess, it’s more challenging due to a larger state space, and in Go, a master might need to train, perhaps 70-100 years, to train their neural networks.
-            </p>            
+                In any case, if you know a sequence of perfect games and have honed your combinatorial skills, you can achieve numerous draws even against the most perfect programs. From my own experience, it's possible. Similarly, in Chess, it's more challenging due to a larger state space, and in Go, a master might need to train, perhaps 70-100 years, to train their neural networks.
+            </p>
         </div>
     </main>
     <footer>
         <p>Code Author: Ing. Robert Polák</p>
     </footer>
 
-    <!-- Place the script tag just before the closing body tag -->
+    <!-- JavaScript pre zobrazenie/skrytie popisu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tlačidlá pre zobrazenie/skrytie popisu
+            const researchButton = document.getElementById('showResearchButton');
+            const researchSection = document.getElementById('researchSection');
+            
+            // Funkcia pre zobrazenie/skrytie sekcie
+            function toggleSection(section) {
+                if (section.classList.contains('active')) {
+                    section.classList.remove('active');
+                    setTimeout(() => {
+                        section.style.display = 'none';
+                        section.style.maxHeight = '0';
+                        section.style.overflow = 'hidden';
+                    }, 500);
+                } else {
+                    // Najprv skryjeme všetky aktívne sekcie
+                    document.querySelectorAll('.content-section.active').forEach(activeSection => {
+                        activeSection.classList.remove('active');
+                        setTimeout(() => {
+                            activeSection.style.display = 'none';
+                            activeSection.style.maxHeight = '0';
+                            activeSection.style.overflow = 'hidden';
+                        }, 500);
+                    });
+                    
+                    // Potom zobrazíme požadovanú sekciu
+                    section.style.display = 'block';
+                    setTimeout(() => {
+                        section.classList.add('active');
+                        section.style.maxHeight = 'none';
+                        section.style.overflow = 'visible';
+                        
+                        // Rolujeme k sekcii a zabezpečíme, že bude viditeľný celý obsah
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 10);
+                }
+            }
+            
+            // Event listenery pre tlačidlá
+            researchButton.addEventListener('click', function() {
+                toggleSection(researchSection);
+            });
+        });
+    </script>
+
+    <!-- Hlavný script hry -->
     <script src="reversi.js"></script>
 </body>
 </html>
