@@ -1,73 +1,73 @@
-# Reversi AI - Hra s umelou inteligenciou
+# Reversi AI - Game with Artificial Intelligence
 
-**Autor kódu:** Ing. Robert Polák
+**Code Author:** Ing. Robert Polák
 
-## Popis projektu
+## Project Description
 
-Táto aplikácia je implementáciou stolovej hry Reversi (známej aj ako Othello) pomocou HTML5 Canvas a JavaScriptu. Hra umožňuje hrať proti počítaču, ktorý využíva kombináciu knihy otvorení a heuristického algoritmu Minimax s orezávaním alfa-beta.
+This application is an implementation of the board game Reversi (also known as Othello) using HTML5 Canvas and JavaScript. The game allows you to play against the computer, which uses a combination of an opening book and a heuristic Minimax algorithm with alpha-beta pruning.
 
-## Funkcionality
+## Features
 
-- **Hra proti počítaču:**  
-  Vyskúšajte si svoje strategické schopnosti proti AI hráčovi.
+- **Play against the computer:**  
+  Test your strategic skills against an AI player.
 
-- **Kniha otvorení:**  
-  AI využíva preddefinovanú knihu otvorení, ktorá obsahuje známe sekvencie ťahov na začiatku hry. Zohľadňuje sa aj symetria dosky (rotácie o 90°, 180°, 270°).
+- **Opening Book:**  
+  The AI utilizes a predefined opening book that contains well-known sequences of moves at the start of the game. Board symmetry (rotations by 90°, 180°, 270°) is also taken into account.
 
-- **Heuristická evaluácia:**  
-  Pri absencii ťahov v knihe otvorení AI prechádza na heuristickú evaluáciu pozícií na doske.
+- **Heuristic Evaluation:**  
+  In the absence of moves in the opening book, the AI switches to a heuristic evaluation of the board positions.
 
-- **Nastaviteľná hĺbka vyhľadávania:**  
-  Možnosť nastaviť hĺbku pre algoritmus Minimax (1 až 10).
+- **Adjustable Search Depth:**  
+  The search depth for the Minimax algorithm can be set (from 1 to 10).
 
-- **Intuitívne rozhranie:**  
-  Moderný a príjemný dizajn pre lepší herný zážitok.
+- **Intuitive Interface:**  
+  A modern and pleasant design for an enhanced gaming experience.
 
-## Inštalácia a spustenie
+## Installation and Running
 
-1. Klonujte alebo stiahnite tento repozitár do vášho počítača.
-2. Uistite sa, že súbory `index.html` a `reversi.js` sú v rovnakom adresári.
-3. Otvorte súbor `index.html` vo vašom obľúbenom webovom prehliadači (odporúča sa Chrome alebo Firefox).
-4. Začnite hrať kliknutím na dosku a vykonaním svojho prvého ťahu.
+1. Clone or download this repository to your computer.
+2. Make sure the files `index.html` and `reversi.js` are in the same directory.
+3. Open the `index.html` file in your favorite web browser (Chrome or Firefox is recommended).
+4. Start playing by clicking on the board and making your first move.
 
-## Ako hrať
+## How to Play
 
-- **Hráte s čiernymi kameňmi a začínate hru.**
-- Kliknite na políčko, kam chcete umiestniť svoj kameň. Platné ťahy sú zvýraznené.
-- Cieľom je mať na konci hry viac svojich kameňov na doske než súper.
-- Počítač vykoná svoj ťah automaticky po vás.
-- Môžete nastaviť hĺbku vyhľadávania pre AI. Vyššia hodnota znamená inteligentnejšie rozhodnutia, ale dlhší čas výpočtu.
+- **You play with the black pieces and start the game.**
+- Click on the square where you want to place your piece. Valid moves are highlighted.
+- The goal is to have more of your pieces on the board than your opponent by the end of the game.
+- The computer will make its move automatically after you.
+- You can set the search depth for the AI. A higher value means smarter decisions but longer calculation time.
 
-## Použitá heuristika
+## Heuristic Used
 
-- **Váhovanie pozícií:**  
-  Každé políčko na doske má pridelenú váhu podľa jeho strategického významu. Rohy majú najvyššiu hodnotu, okraje strednú a vnútorné polia nižšiu.
+- **Position Weighting:**  
+  Each square on the board is assigned a weight based on its strategic importance. Corners have the highest value, edges a medium value, and inner squares a lower value.
 
-- **Minimax algoritmus:**  
-  AI používa algoritmus Minimax s orezávaním alfa-beta na predikciu najlepšieho ťahu do určitej hĺbky.
+- **Minimax Algorithm:**  
+  The AI uses the Minimax algorithm with alpha-beta pruning to predict the best move up to a certain depth.
 
-- **Kniha otvorení:**  
-  AI začína hru pomocou knihy otvorení, ktorá obsahuje preddefinované sekvencie ťahov. Kniha zohľadňuje aj rotácie dosky, takže AI dokáže rozpoznať otvorenia aj pri symetrických pozíciách.
+- **Opening Book:**  
+  The AI starts the game using an opening book that contains predefined move sequences. The book also considers board rotations, so the AI can recognize openings even with symmetric positions.
 
-## Prispôsobenie
+## Customization
 
-- **Pridanie vlastných otvorení:**  
-  Môžete upraviť alebo pridať nové otvorenia do knihy v súbore `reversi.js` v časti `openingBook`.
+- **Adding Custom Openings:**  
+  You can modify or add new openings to the book in the `reversi.js` file under the `openingBook` section.
 
-- **Úprava heuristiky:**  
-  Zmeňte váhy v matice `POSITION_WEIGHTS` pre experimentovanie s rôznymi stratégiami AI.
+- **Adjusting the Heuristic:**  
+  Change the weights in the `POSITION_WEIGHTS` matrix to experiment with different AI strategies.
 
-- **Dizajn:**  
-  Upraviť vzhľad stránky môžete v súbore `index.html` v sekcii `<style>`.
+- **Design:**  
+  You can modify the page appearance in the `<style>` section of the `index.html` file.
 
-## Ukážka
+## Demo
 
-Tu môžete pridať screenshoty alebo GIFy hry pre lepšiu vizualizáciu.
+Here you can add screenshots or GIFs of the game for better visualization.
 
-## Licencia
+## License
 
-Tento projekt je licencovaný pod licenciou MIT. Podrobnosti nájdete v súbore `LICENSE`.
+This project is licensed under the MIT License. Details can be found in the `LICENSE` file.
 
-## Kontakt
+## Contact
 
-Ak máte otázky alebo návrhy, môžete ma kontaktovať na e-mailovej adrese: [robopol@gmail.com](mailto:robopol@gmail.com)
+If you have any questions or suggestions, you can contact me at: [robopol@gmail.com](mailto:robopol@gmail.com)
