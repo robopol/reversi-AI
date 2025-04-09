@@ -5,6 +5,7 @@
 ## Project Description
 
 This application is an implementation of the board game Reversi (also known as Othello) using HTML5 Canvas and JavaScript. The game allows you to play against the computer, which uses a combination of an opening book and a heuristic Minimax algorithm with alpha-beta pruning.
+![Reversi online game](assets/screencapture-reversi.png)
 
 ## Features
 
